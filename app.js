@@ -1,19 +1,17 @@
 const Koa = require("koa");
+const Router = require('koa-router');
 
 const app = new Koa();
+let router = new Router();
 
-app.use(async (ctx, next) => {
-    // console.error(ctx)
-    await next();
+router.get('/', (ctx, next)=>{
     ctx.response.type = "text/html";
-    ctx.response.body = "<h1>Hello, koa2!</h1>";
-});
+    ctx.response.body = "<h1>Hello, seed!</h1>";
+})
 
-// app.on("error", err => {
-//     console.error(err)
-//     // log.error("server error", err);
-// });
+app.use(router.routes());
 
 app.listen(3000);
+
 console.log("======= seed start ========");
 console.log("======= app started at port 3000 ========");
