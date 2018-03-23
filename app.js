@@ -2,6 +2,7 @@ const Koa = require("koa");
 const Router = require("koa-router");
 const swig = require("swig");
 const path = require("path");
+const https = require("https");
 
 const app = new Koa();
 let router = new Router();
@@ -26,14 +27,23 @@ router.get("/add", (ctx, next) => {
 
 // todo 发起一个请求
 
-// router.post("/get/post/from/github", (ctx, next) => {
-//     // ctx.render("add.html", {
-//     //     pagename: "awesome people",
-//     //     authors: ["Paul", "Jim", "Jane"]
-//     // });
-//     ctx.request.url= '/bigdots/blog/blob/master/md/ES6%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/let%26const.md';
-//     ctx.request.method = 'get';
-// });
+// https
+//     .get("https://github.com/bigdots/blog/blob/master/md/ES6%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/let%26const.md", resp => {
+//         let data = "";
+
+//         // A chunk of data has been recieved.
+//         resp.on("data", chunk => {
+//             data += chunk;
+//         });
+
+//         // The whole response has been received. Print out the result.
+//         resp.on("end", () => {
+//             console.log(data);
+//         });
+//     })
+//     .on("error", err => {
+//         console.log("Error: " + err.message);
+//     });
 
 app.use(router.routes());
 
