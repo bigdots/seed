@@ -1,10 +1,17 @@
-// import Vue from "vue";
-// import Hello from './Hello'
+import Vue from "vue";
+import Hello from './components/Hello.vue';
+// import { Button, Select } from 'element-ui';
+// Vue.use(Button);
 
-// new Vue({
-//     el: "#app",
-//     components: { Hello },
-//     template: '<Hello/>'
-// });
+import { Button, Select } from 'element-ui';
+Vue.component(Button.name, Button);
 
-let a = 2
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+let vm = new Vue({
+    el: "#app",
+    components: { Hello },
+    template: '<Hello/>'
+});

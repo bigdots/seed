@@ -3,6 +3,7 @@ const Router = require("koa-router");
 const swig = require("swig");
 const path = require("path");
 const https = require("https");
+const static = require("koa-static");
 
 const app = new Koa();
 let router = new Router();
@@ -18,8 +19,8 @@ router.get("/", (ctx, next) => {
     ctx.response.body = "<h1>Hello, seed!</h1>";
 });
 
-router.get("/add", (ctx, next) => {
-    ctx.render("add.html", {
+router.get("/login", (ctx, next) => {
+    ctx.render("login.html", {
         pagename: "awesome people",
         authors: ["Paul", "Jim", "Jane"]
     });
@@ -45,8 +46,10 @@ router.get("/add", (ctx, next) => {
 //         console.log("Error: " + err.message);
 //     });
 
+app.use(static(path.resolve(__dirname, "public")));
+
 app.use(router.routes());
 
-app.listen(3000);
+app.listen(8687);
 
 console.log("======= seed started at port 3000 ========");

@@ -9,16 +9,16 @@ const filePath = path.resolve(__dirname, "src");
 let files = fs.readdirSync(filePath);
 // console.error(files);
 
-// let targetdirs = files.reduce((total, current) => {
-//     let dirP = path.join(filePath, current);
-//     let stats = fs.statSync(dirP);
-//     if(stats.isDirectory()){
-//         total.push(dirP)
-//     }
-//     return total;
-// }, []);
+let targetdirs = files.reduce((total, current) => {
+    let dirP = path.join(filePath, current);
+    let stats = fs.statSync(dirP);
+    if (stats.isDirectory()) {
+        total.push(current);
+    }
+    return total;
+}, []);
 
-let entry = files.reduce((total, current) => {
+let entry = targetdirs.reduce((total, current) => {
     total[current] = path.resolve("src", current, "index.js");
     return total;
 }, {});
@@ -33,13 +33,25 @@ module.exports = {
     devtool: "inline-source-map",
     module: {
         rules: [
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-            // {
-            //     test: /\.css$/,
-            //     use: ["style-loader", "css-loader"]
-            // },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.vue$/,
+                loader: "vue-loader"
+            },
             {
                 test: /\.(png|svg|jpg|gif)$/,
+                use: ["file-loader"]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: ["file-loader"]
             }
             // {
@@ -57,7 +69,12 @@ module.exports = {
         //     name: "vendor",
         //     // filename: "vendor-[hash].min.js"
         // })
-    ]
+    ],
+    resolve: {
+        alias: {
+            vue$: "vue/dist/vue.esm.js" // 用 webpack 1 时需用 'vue/dist/vue.common.js'
+        }
+    }
     // optimization:{
     //     splitChunks: {
 
