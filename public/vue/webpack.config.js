@@ -3,14 +3,31 @@ const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+const fs = require("fs");
+const filePath = path.resolve(__dirname, "src");
+// console.error(filePath);
+let files = fs.readdirSync(filePath);
+// console.error(files);
+
+// let targetdirs = files.reduce((total, current) => {
+//     let dirP = path.join(filePath, current);
+//     let stats = fs.statSync(dirP);
+//     if(stats.isDirectory()){
+//         total.push(dirP)
+//     }
+//     return total;
+// }, []);
+
+let entry = files.reduce((total, current) => {
+    total[current] = path.resolve("src", current, "index.js");
+    return total;
+}, {});
+
 module.exports = {
-    entry: {
-        front: "./src/front/index.js",
-        back: "./src/back/index.js"
-    },
+    entry,
     output: {
         filename: "[name].bundle.js",
-        path: path.resolve(__dirname, "dist/js")
+        path: path.resolve(__dirname, "dist")
     },
     mode: "development",
     devtool: "inline-source-map",
@@ -24,7 +41,7 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: ["file-loader"]
-            },
+            }
             // {
             //     test: /\.css$/,
             //     use: ExtractTextPlugin.extract({
