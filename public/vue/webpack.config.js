@@ -19,7 +19,7 @@ let targetdirs = files.reduce((total, current) => {
 }, []);
 
 let entry = targetdirs.reduce((total, current) => {
-    total[`${current}/index`] = path.resolve("src", current, "index.js");
+    total[current] = path.resolve("src", current, "index.js");
     return total;
 }, {});
 
