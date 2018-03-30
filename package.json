@@ -4,8 +4,8 @@
   "author": "和霁",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "pm2 start app.js --watch -i 2 && pm2 logs"
+    "server": "pm2 start app.js --watch -i 2 && pm2 logs",
+    "vue": "cd public/vue && webpack --watch"
   },
   "repository": {
     "type": "git",
