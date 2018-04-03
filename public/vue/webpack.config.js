@@ -26,7 +26,7 @@ let entry = targetdirs.reduce((total, current) => {
 module.exports = {
     entry,
     output: {
-        filename: "[name].bundle.js",
+        filename: "[name]/main.bundle.js",
         path: path.resolve(__dirname, "dist")
     },
     mode: "development",
@@ -48,11 +48,15 @@ module.exports = {
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
-                use: ["file-loader"]
+                loader: "url-loader",
+                options: {
+                    limit: 244,
+                    name: "assets/[name].[hash:7].[ext]"
+                }
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: ["file-loader"]
+                use: "url-loader",
             }
             // {
             //     test: /\.css$/,
